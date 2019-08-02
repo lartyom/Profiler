@@ -1,0 +1,12 @@
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\bin\Debug\netstandard2.0\Profiler.deps.json
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\bin\Debug\netstandard2.0\Profiler.dll
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\bin\Debug\netstandard2.0\Profiler.pdb
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.csprojAssemblyReference.cache
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.csproj.CoreCompileInputs.cache
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.AssemblyInfoInputs.cache
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.AssemblyInfo.cs
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.dll
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\Profiler.pdb
+C:\Users\Admin\source\repos\Profiler\Profiler\Profiler\obj\Debug\netstandard2.0\XamlC.stamp

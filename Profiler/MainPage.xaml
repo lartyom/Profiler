@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Profiler"
+             x:Class="Profiler.MainPage"
+             BackgroundImage="app_bg.jpg">
+
+    <!--<StackLayout>
+        --><!-- Place new controls here --><!--
+        <Label Text="Hello World!" 
+           HorizontalOptions="Center"
+           VerticalOptions="CenterAndExpand" />
+    </StackLayout>-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+            
+        </Grid.ColumnDefinitions>
+        <Entry x:Name="profile_url" BackgroundColor="White" TextColor="Black" Grid.Column="0" Grid.ColumnSpan="3"></Entry>
+        <Label x:Name="infobox" BackgroundColor="Black"  TextColor="DarkGray" FontFamily="Consolas" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"></Label>
+        <Label x:Name="infobox_2" BackgroundColor="Black"  TextColor="DarkGray" FontFamily="Consolas" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"></Label>
+        <Image x:Name="photo" Source="bottom.jpg" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"></Image>
+        <Label x:Name="infobox_3" BackgroundColor="White" TextColor="Black" Grid.Column="2" Grid.Row="3" Grid.ColumnSpan="3" Text="NO RECORD"></Label>
+        <Button x:Name="open" BackgroundColor="White" TextColor="Black" FontFamily="Consolas" Grid.Column="3" Grid.ColumnSpan="3" Text="Open" Clicked="Open_profile"></Button>
+        </Grid>
+
+    
+   </ContentPage>
