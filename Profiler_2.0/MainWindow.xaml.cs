@@ -107,8 +107,8 @@ namespace WpfApp1
         }
 
         WebClient Client = new WebClient();
-        string access_key = "19d482bbfe49b8089c849977c57cadf62224a1839da31c15a05345a58ae3970c3d1bac1b0c96419f1cc2b";
-        string access_key_2 = "3385c29d14bf9c3b2672011ca29b1e77407bbc6aff408f0dba25525232dfad0775ac591bf3d3330521673";
+        string access_key = config.Read("access_key", "Keys");
+        string access_key_2 = config.Read("access_key_2", "Keys");
 
         private void Load_profile(object sender, RoutedEventArgs e)
         {
