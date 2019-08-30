@@ -3,6 +3,5 @@
 | Control | Value | Description|
 |:--------|:------|:-----------|
 |   `+`   | -     |Display profile on console|
-|:--------|:------|:-----------|
 |   `*`   | -     |Update profile|
             
