@@ -9,5 +9,6 @@
 |  `Load` |`<profile_id>`|Load profile|
 |`Detailed info`|`true/false`|Load profile's detailized info (`+` to display)|
 |`profiles/`|`<DirectoryPath>`|Profiles path (changes in `config.ini`)|
+## Configuration (`config.ini`)
 
             
