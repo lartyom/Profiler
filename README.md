@@ -14,6 +14,12 @@
 | Key | Value | Description |
 |:----|:------|:------------|
 |`DirectoryPath`|`<folder_path>`|Profiles folder|
-|`Controls`|`<button/mouse>`|leafing device (unstable)|
+|`Control`|`<buttons/mouse>`|leafing device|
+### [Keys]
+| Key | Value | Description |
+|:----|:------|:------------|
+|`access_key`|`<key>`|First level access_key|
+|`access_key_2`|`<key>`|Second level access_key|
+
 
             
