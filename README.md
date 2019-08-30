@@ -2,4 +2,6 @@
 ## Controls
 | Control | Value | Description|
 |:--------|:------|:-----------|
+|   `+'   | -     |Display profile on console|
+
             
