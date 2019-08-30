@@ -33,7 +33,7 @@ namespace Profiler
             string profile = "";
             try
             {
-                WebRequest request = WebRequest.Create($"https://api.vk.com/method/users.get?user_ids={profile_url.Text}&fields=status,photo_max,bdate,activities&access_token=3385c29d14bf9c3b2672011ca29b1e77407bbc6aff408f0dba25525232dfad0775ac591bf3d3330521673&v=5.92");
+                WebRequest request = WebRequest.Create($"https://api.vk.com/method/users.get?user_ids={profile_url.Text}&fields=status,photo_max,bdate,activities&access_token=&v=5.92");
                 WebResponse response = request.GetResponse();
 
 
