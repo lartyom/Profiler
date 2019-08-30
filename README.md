@@ -4,7 +4,7 @@
 |:--------|:------|:------------|
 |   `+`   | -     |Display detailized info|
 |   `*`   | -     |Update profile|
-|![download_btn](https://raw.githubusercontent.com/lartman/Profiler/master/Profiler_2.0/hidentity_btn_download.png)| -     |Download music|
+|![download_btn](https://raw.githubusercontent.com/lartman/Profiler/master/Profiler_2.0/hidentity_btn_download.png)/`Q`| -     |Download music|
 |  `Open` |`<profile_name>`|Open profile|
 |  `Load` |`<profile_id>`|Load profile|
 |`Detailed info`|`true/false`|Load profile's detailized info (`+` to display)|
