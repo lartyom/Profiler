@@ -8,6 +8,7 @@
 |   `<`   | -     |Previous profile|
 |![download_btn](https://raw.githubusercontent.com/lartman/Profiler/master/Profiler_2.1/hidentity_btn_download.png)/`Q`| -     |Download music|
 |  `Open`/`Enter` |`<profile_name>`|Open profile|
+|  `Download` |`<profile_id>`|Download profile into `<folder_path>`|
 |  `Load` |`<profile_id>`|Load profile|
 |`Detailed info`|`true/false`|Load profile's detailized info (`+` to display)|
 |`profiles/`|`<DirectoryPath>`|Profiles folder (changes in `config.ini`)|
