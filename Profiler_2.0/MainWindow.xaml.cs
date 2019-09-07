@@ -16,28 +16,57 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
-
-
+using System.Diagnostics;
 
 
 namespace WpfApp1
 {
     public partial class MainWindow
-    {
-        
+    {   
         static IniFile config = new IniFile("config.ini");
         public MainWindow()
         {
+            Console.Out.WriteLine();
+            Console.Out.WriteLine();
+            Console.Out.WriteLine();
+            Console.Out.WriteLine();
+            Console.Out.WriteLine("                   ___        ____  ______ ____ ");
+            Console.Out.WriteLine(@"                //_   \_    / __ \/ ____// __ \");
+            Console.Out.WriteLine(@"                / / \___/- / / / / __/ // / / /\");
+            Console.Out.WriteLine(@"               \ \        / /_/ / /__ // /_/ / /");
+            Console.Out.WriteLine(@"                \ \\     /_____/_____//_____/ /");
+            Console.Out.WriteLine(@"                 / / \   _\_____\_____\\_____\/");
+            Console.Out.WriteLine(@"         ////\___\ \ / /  ___// ___// ____/\");
+            Console.Out.WriteLine(@"        \/\\\\    \//  \__ \ / __/ / /\___\/   v2.0");
+            Console.Out.WriteLine(@"       \\     \\////  ___/ // /__ / /_/__    /\//\\*=~-");
+            Console.Out.WriteLine(@"       \--          /_____//_____/\ ____/\  //");
+            Console.Out.WriteLine(@"        \ ----\     \_____\\_____\/\____\/ //");
+            Console.Out.WriteLine(@"         \----\\____________________________//");
+            Console.Out.WriteLine(@"               \_\\/__\/_\\/__\/__\\/__\/__\//");
             
             InitializeComponent();
             infobox.Content = "Profiler__App\nv0.2xx[beta]";
             infobox_2.Content = "**-***-***";
-            profile_dir.Content = config.Read("DirectoryPath")+" /";
+            Hyperlink path_to_profiles = new Hyperlink(new Run(config.Read("DirectoryPath") + " /"));         
+            path_to_profiles.NavigateUri = new Uri(Directory.GetCurrentDirectory()+"/"+ config.Read("DirectoryPath"));
+            path_to_profiles.RequestNavigate += Hyperlink_RequestNavigate;
+            profile_dir.Inlines.Add(path_to_profiles);
+            
             this.KeyDown += Form1_KeyDown;
+            //if (clArgs.Length > 1)
+            //{
+            //    profile_url.Text = clArgs[clArgs.Length-1];
+            //    path_to_file = $"{profile_url.Text}";
+            //    Open_profile(null, null);
+            //}
+            //else
+            //{
+            //    path_to_file = $"{config.Read("DirectoryPath")}/{profile_url.Text}";
+            //}
             
         }
-        
-       
+
+        string[] clArgs = Environment.GetCommandLineArgs();       
         string[] dir = Directory.GetFiles(config.Read("DirectoryPath"), "* json");      
         int dir_count = 0;
         string[] param = new string[] { "nickname", "country", "relation","timezone", "city", "relatives"};
@@ -110,101 +139,34 @@ namespace WpfApp1
         string access_key = config.Read("access_key", "Keys");
         string access_key_2 = config.Read("access_key_2", "Keys");
 
-        private void Load_profile(object sender, RoutedEventArgs e)
-        {
-            
+        public void Load_profile(object sender, RoutedEventArgs e)
+        {           
             try
             {
                 if (checkBox1.IsChecked == true)
                 {
-                    Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities,{string.Join(",", param)}&access_token={access_key_2}&v=5.92", $"{profile_load.Text}.json");
-                    
+                    Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities,{string.Join(",", param)}&access_token={access_key_2}&v=5.92", $"{config.Read("DirectoryPath")}/{profile_load.Text}.json");
+                   
                 }
                 else
                 {
 
-                    Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities&access_token={access_key_2}&v=5.92", $"{profile_load.Text}.json");
+                    Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities&access_token={access_key}&v=5.92", $"{config.Read("DirectoryPath")}/{profile_load.Text}.json");
+                    
                 }
                 //if (File.ReadAllLines($"{profile_url.Text}.json").Contains("error"))
                 //{
                 //    MessageBox.Show("Invalid user id");
                 //    File.Delete($"{profile_url.Text}.json");
                 //}
-
+                
                 dir = Directory.GetFiles(config.Read("DirectoryPath"), "*json");
             }
             catch
             {
                 MessageBox.Show("Not connection");
-            }
-           
-
+            }          
         }
-
-        //private void ServerLoad_profile(object sender, RoutedEventArgs e)
-        //{
-
-        //        WebClient client = new WebClient();
-        //        string profile_str = client.DownloadString("https://api.vk.com/method/users.get?user_ids={profile_url.Text}&fields=status,photo_max,bdate,activities&access_token=4084c07f4084c07f4084c07faa40ec3049440844084c07f1cf185babfbf2e5389e1aedf&v=5.92");
-
-        //        string[] profile = File.ReadAllLines(profile_str);
-        //        if (profile[0].Contains("error"))
-        //        {
-        //            MessageBox.Show("Invalid user id");
-        //        }
-        //        else
-        //        {
-        //            //Обрезка ненужного тэга
-        //            profile[0] = profile[0].Substring(13);
-        //            profile[0] = profile[0].Substring(0, profile[0].Length - 2);
-        //            Profile json_profile = JsonConvert.DeserializeObject<Profile>(@profile[0]); //Десериализация json файла профайла
-
-        //            if (json_profile.status == "")
-        //            {
-        //                json_profile.status = "NO RECORD";
-        //            }
-        //            if (json_profile.activities == null || json_profile.activities == "")
-        //            {
-        //                json_profile.activities = "NO RECORD";
-
-        //            }
-        //            //Фамилия, Имя
-        //            infobox_3.Content = $"{json_profile.last_name}, {json_profile.first_name}";
-        //            infobox_4.Content = $"  {json_profile.status}";
-        //            //Установка размеров
-        //            age.Margin = new Thickness(10, 10, 55 - (CalculateAge(json_profile.bdate).Length) * 4, 35);
-        //            infobox_4.Margin = new Thickness(117, 45, 27 - (json_profile.status.Length) * 3, 0);
-        //            occupation.Margin = new Thickness(10, 45, 15 - (json_profile.activities.Length) * 5, 0);
-        //            //Возраст
-        //            age.Content = $"Age: {CalculateAge(json_profile.bdate)}";
-        //            photo.Source = new BitmapImage(new Uri(json_profile.photo_max));
-        //            //Деятельность
-        //            occupation.Content = $"Occupation: {json_profile.activities}";
-        //            if (json_profile.status_audio != null)
-        //            {
-        //                add.Opacity = 100;
-        //                add.Content = "♫";
-        //                add.Background = Brushes.LightSkyBlue;
-        //                hack.IsEnabled = true;
-        //                hack.Click += Download;
-        //            }
-        //            else
-        //            {
-        //                add.Opacity = 0;
-        //                add.Content = "";
-        //                add.Background = Brushes.Black;
-        //                hack.IsEnabled = false;
-        //                hack.Click -= Download;
-
-        //            }
-        //        }
-
-
-
-        //        MessageBox.Show("Not connection");
-
-        //}
-
 
         private bool isFocused = false;
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -223,51 +185,147 @@ namespace WpfApp1
         public void Update_profile(object sender, RoutedEventArgs e)
         {
             Console.Out.WriteLine($"Profile {profile_url.Text} updated");
-            if (checkBox1.IsChecked == true)
-            {
-
-
-                Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_url.Text.Replace(".json", "")}&fields=status,photo_max,bdate,activities,{string.Join(",", param)}&{access_key_2}&v=5.92", $"{config.Read("DirectoryPath") + "/" + profile_url.Text.Replace(".json", "")}.json");
-
-            }
-            else
-            {
-
-                Client.DownloadFile($"https://api.vk.com/method/users.get?user_ids={profile_url.Text.Replace(".json", "")}&fields=status,photo_max,bdate,activities&access_token={access_key_2}&v=5.92", $"{config.Read("DirectoryPath") + "/" + profile_url.Text.Replace(".json", "")}.json");
-
-            }
+            Load_profile(new object(), new RoutedEventArgs());
 
             Open_profile(new object(), new RoutedEventArgs());
-            //if (File.ReadAllLines($"{profile_url.Text}.json").Contains("error"))
-            //{
-            //    MessageBox.Show("Invalid user id");
-            //    File.Delete($"{profile_url.Text}.json");
-            //}
+           
+        }
+        public void OnlineOpenProfile(object sender, RoutedEventArgs e)
+        {
+            //profile_url.Text += ".json";
+
+            string profile = "";
+            WebRequest request;
+            WebResponse response = null;
+            try
+            {
+
+                try
+                {
+                    if (checkBox1.IsChecked == true)
+                    {
+                        
+                        request = WebRequest.Create($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities,{string.Join(",", param)}&access_token={access_key_2}&v=5.92");
+                        response = request.GetResponse();
+                    }
+                    else
+                    {
+                       
+                        request = WebRequest.Create($"https://api.vk.com/method/users.get?user_ids={profile_load.Text}&fields=status,photo_max,bdate,activities&access_token={access_key}&v=5.92");
+                        response = request.GetResponse();
+                    }
+                    //if (File.ReadAllLines($"{profile_url.Text}.json").Contains("error"))
+                    //{
+                    //    MessageBox.Show("Invalid user id");
+                    //    File.Delete($"{profile_url.Text}.json");
+                    //}
+
+                   
+
+                }
+                catch
+                {
+                    MessageBox.Show("Not connection");
+                }
+                
 
 
-            //}
 
-            //catch (Exception ex)
-            //{
+                using (Stream stream = response.GetResponseStream())
+                {
+                    using (StreamReader reader = new StreamReader(stream))
+                    {
+
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            profile += line;
+                        }
+                    }
+                }
+                response.Close();
+
+                if (profile.Contains("error"))
+                {
+                    MessageBox.Show("Invalid user id", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                else
+                {
+                    //Обрезка ненужного тэга
+                    
 
 
-            //        MessageBox.Show(ex.Message + " " + ex.GetType().ToString());
+                    profile = profile.Substring(13);
+                    profile = profile.Substring(0, profile.Length - 2);
+                    Profile json_profile = JsonConvert.DeserializeObject<Profile>(@profile); //Десериализация json файла профайла
 
-            //}
+                    if (json_profile.status == "")
+                    {
+                        json_profile.status = "NO RECORD";
+                    }
+                    if (json_profile.activities == null || json_profile.activities == "")
+                    {
+                        json_profile.activities = "NO RECORD";
+                    }
+                    //Фамилия, Имя
+                    infobox_3.Content = $"{json_profile.last_name}, {json_profile.first_name}";
+                    infobox_4.Content = $"  {json_profile.status}";
+                    //Установка размеров
+                    age.Margin = new Thickness(10, 10, 55 - (CalculateAge(json_profile.bdate).Length) * 4, 35);
+                    infobox_4.Margin = new Thickness(117, 45, 27 - (json_profile.status.Length) * 3, 0);
+                    occupation.Margin = new Thickness(10, 45, 15 - (json_profile.activities.Length) * 5, 0);
+                    //Возраст
+                    age.Content = $"Age: {CalculateAge(json_profile.bdate)}";
+                    photo.Source = new BitmapImage(new Uri(json_profile.photo_max));
+                    //Деятельность
+                    occupation.Content = $"Occupation: {json_profile.activities}";
+                    if (json_profile.status_audio != null)
+                    {
+                        add.Opacity = 100;
+                        add.Content = "♫";
+                        add.Background = Brushes.LightSkyBlue;
+                        hack.IsEnabled = true;
+                        hack.Click += Download;
+                    }
+                    else
+                    {
+                        add.Opacity = 0;
+                        add.Content = "";
+                        add.Background = Brushes.Black;
+                        hack.IsEnabled = false;
+                        hack.Click -= Download;
+
+                    }
+
+                    //Метод вычисляющий возраст
+
+                }
+            }
+
+            catch (Exception ex)
+            {
+                if (ex.GetType().ToString() != "System.ArgumentNullException" && ex.GetType().ToString() != "System.IndexOutOfRangeException")
+                {
+                    MessageBox.Show(ex.Message + " " + ex.GetType().ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            //path_to_file = $"{config.Read("DirectoryPath")}/{profile_url.Text}";
         }
         public void Open_profile(object sender, RoutedEventArgs e)
         {
             //profile_url.Text += ".json";
             dir = Directory.GetFiles(config.Read("DirectoryPath"), "*json");
-
+            
+            
             try
             {
                 string[] profile = File.ReadAllLines($"{config.Read("DirectoryPath")}/{ profile_url.Text}");
 
-
                 if (profile[0].Contains("error") || File.Exists($"{config.Read("DirectoryPath")}/{profile_url.Text}") == false)
                 {
-                    MessageBox.Show("Invalid user id");
+                    MessageBox.Show("Invalid user id", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
 
                 else
@@ -330,8 +388,7 @@ namespace WpfApp1
                     }
 
                     //Метод вычисляющий возраст
-
-
+                    
                 }
             }
 
@@ -339,13 +396,17 @@ namespace WpfApp1
             {
                 if (ex.GetType().ToString() != "System.ArgumentNullException" && ex.GetType().ToString() != "System.IndexOutOfRangeException")
                 {
-                    MessageBox.Show(ex.Message +" "+ ex.GetType().ToString());
+                    MessageBox.Show(ex.Message +" "+ ex.GetType().ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             
-
+            //path_to_file = $"{config.Read("DirectoryPath")}/{profile_url.Text}";
         }
-
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
+        }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key.ToString() == "Q" && hack.IsEnabled==true)
@@ -517,11 +578,12 @@ namespace WpfApp1
                     //}
                     // Get the PropertyItems property from image.
 
-                   
-                   
-
+                    
                     Console.Out.WriteLine("----------------------------------------------------");
+                    Console.BackgroundColor = ConsoleColor.White;
+                    Console.ForegroundColor = ConsoleColor.Black;
                     Console.Out.WriteLine($"{json_profile.first_name} {json_profile.nickname} {json_profile.last_name}");
+                    Console.ResetColor();
                         Console.Out.WriteLine($"Age > {CalculateAge(json_profile.bdate)}");                                                                              
                         Console.Out.WriteLine($"Nationality > {json_profile.country["title"]}");                                     
                         Console.Out.WriteLine($"Marital Status > {json_profile.relations[json_profile.relation]}");
@@ -548,9 +610,6 @@ namespace WpfApp1
                         types.Add(json_profile.relatives[i]["type"]);
                     }
                     Console.Out.WriteLine($"Children > {String.Join(", ", names)}");
-
-
-
                 }
             }
             catch 

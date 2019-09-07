@@ -31,13 +31,13 @@
         </Grid.RowDefinitions>
         <CheckBox x:Name="checkBox1" Height="25" Content="Detailed info" Foreground="White" FontFamily="Consolas" Margin="0,57,0,58" Grid.RowSpan="2"/>
 
-        <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="2" Grid.Row="0" Width="115" Content="Open" Click="Open_profile"></Button>
-        <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="2" Width="115"  Click="Load_profile" Margin="7,52,10,63" Grid.RowSpan="2">
+        <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="2" Grid.Row="0" Content="Open" Click="Open_profile" Margin="8,22,0,22"/>
+        <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="2"  Click="Load_profile" Margin="7,52,41,63" Grid.RowSpan="2">
 
 
 
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="    Load |" Height="14" FontFamily="./#CPMono_v07 Plain"/>
+                <TextBlock Text="Download |" Height="14" FontFamily="./#CPMono_v07 Plain"/>
                 <Image Source="hidentity_download_icon.png" Margin="0,0,5,0" RenderTransformOrigin="0.588,1.143" />
 
             </StackPanel>
@@ -53,11 +53,11 @@
         <Label x:Name="age" Background="Black" Height="25" Foreground="DarkGray" FontFamily="Consolas" Grid.Column="2" Grid.Row="3" Margin="10,10,51,35" Content="NO RECORD"/>
         <Label x:Name="occupation" Background="Black" Height="25" Foreground="DarkGray" FontFamily="Consolas" Grid.Column="2" Grid.Row="3" Margin="10,45,25,0" Content="NO RECORD"/>
         <Label x:Name="add" Background="Black" Foreground="Black" FontFamily="Consolas" Grid.Column="1" Grid.Row="2" Margin="110,0,0,45" Content="" FontSize="16" RenderTransformOrigin="1.852,0.4" Opacity="0"/>
-        
+
         <TextBox x:Name="profile_url" Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Text="" Grid.Column="1" KeyDown="Enter_KeyDown" GotFocus="TextBox_GotFocus" SelectionChanged="TextBox_SelectionChanged" Margin="0,22,0,0" VerticalAlignment="Top"></TextBox>
         <TextBox x:Name="profile_load" Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Text="" Grid.Column="1" Margin="0,52,0,63" GotFocus="TextBox_GotFocus" SelectionChanged="TextBox_SelectionChanged" Grid.RowSpan="2"/>
 
-        <Label x:Name="profile_dir" Height="25"  Foreground="White" FontFamily="Consolas"></Label>
+        <TextBlock x:Name="profile_dir" Height="25"  Foreground="White" FontFamily="Consolas"></TextBlock>
         <Button x:Name ="hack"  Foreground="LightSkyBlue"  Grid.Column="4" Grid.Row="4"  IsEnabled="False" Margin="80,20,0,0" >
             <Button.Content>
                 <Image Source="hidentity_btn_download.png" Height="50" Width="50" />
@@ -69,5 +69,6 @@
         <Button x:Name="prev_btn" Grid.Row="2" Content="&lt;" FontFamily="Consolas" Background="DeepSkyBlue" FontSize="16" Margin="103,0,0,0"  IsEnabled="False" Opacity="0" Click="Prev" />
         <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="5"  Content="+" Margin="82,22,23,22" FontSize="20" Click="Button_Click"/>
         <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="5"  Content="*" Margin="22,22,83,22" FontSize="20" Click="Update_profile" RenderTransformOrigin="-1.464,0.44"/>
+        <Button Height="25" Background="White" Foreground="Black" FontFamily="Consolas" Grid.Column="2"  Click="OnlineOpenProfile" Margin="96,52,0,62" Grid.RowSpan="2" RenderTransformOrigin="1.475,0.64" Content="Load"></Button>
     </Grid>
 </Window>
