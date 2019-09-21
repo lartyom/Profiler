@@ -1,19 +1,19 @@
 ﻿Profiler
 
 
-exe
+winexe
 C#
 .cs
-C:\Users\Admin\Desktop\Profiler_2.0\obj\Debug\
+C:\Users\Admin\Documents\GitHub\Profiler\Profiler_2.1\obj\Debug\
 Profiler
 none
 false
 DEBUG;TRACE
-C:\Users\Admin\Desktop\Profiler_2.0\App.xaml
+C:\Users\Admin\Documents\GitHub\Profiler\Profiler_2.1\App.xaml
 11151548125
-11065788026
+3-420410212
 12-837887210
-16-2108991138
+22393208335
 MainWindow.xaml;
 
 True

@@ -1,0 +1,1 @@
+{"error":{"error_code":113,"error_msg":"Invalid user id","request_params":[{"key":"user_ids","value":"lartman_07.json"},{"key":"fields","value":"status,photo_max,bdate,activities,nickname,country,relation,timezone,city,relatives"},{"key":"v","value":"5.92"},{"key":"method","value":"users.get"},{"key":"oauth","value":"1"}]}}

@@ -17,6 +17,8 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Data.SQLite;
+
 
 
 namespace WpfApp1
@@ -26,25 +28,29 @@ namespace WpfApp1
         static IniFile config = new IniFile("config.ini");
         public MainWindow()
         {
-            Console.Out.WriteLine();
-            Console.Out.WriteLine();
-            Console.Out.WriteLine();
-            Console.Out.WriteLine();
-            Console.Out.WriteLine("                   ___        ____  ______ ____ ");
-            Console.Out.WriteLine(@"                //_   \_    / __ \/ ____// __ \");
-            Console.Out.WriteLine(@"                / / \___/- / / / / __/ // / / /\");
-            Console.Out.WriteLine(@"               \ \        / /_/ / /__ // /_/ / /");
-            Console.Out.WriteLine(@"                \ \\     /_____/_____//_____/ /");
-            Console.Out.WriteLine(@"                 / / \   _\_____\_____\\_____\/");
-            Console.Out.WriteLine(@"         ////\___\ \ / /  ___// ___// ____/\");
-            Console.Out.WriteLine(@"        \/\\\\    \//  \__ \ / __/ / /\___\/   v2.0");
-            Console.Out.WriteLine(@"       \\     \\////  ___/ // /__ / /_/__    /\//\\*=~-");
-            Console.Out.WriteLine(@"       \--          /_____//_____/\ ____/\  //");
-            Console.Out.WriteLine(@"        \ ----\     \_____\\_____\/\____\/ //");
-            Console.Out.WriteLine(@"         \----\\____________________________//");
-            Console.Out.WriteLine(@"               \_\\/__\/_\\/__\/__\\/__\/__\//");
+            
+           
+           
+            
             
             InitializeComponent();
+            ConsoleLog("");
+            ConsoleLog("");
+            ConsoleLog("");
+            ConsoleLog("");
+            ConsoleLog("               ___       ____  ______ ____ ");
+            ConsoleLog(@"           //_   \_    / __ \/ ____// __ \");
+            ConsoleLog(@"          / / \___/-  / / / / __/ // / / /\");
+            ConsoleLog(@"          \ \        / /_/ / /__ // /_/ / /");
+            ConsoleLog(@"           \ \\     /_____/_____//_____/ /");
+            ConsoleLog(@"           / / \   _\_____\_____\\_____\/");
+            ConsoleLog(@"   ////\___\ \ /  /  ___// ___// ____/\");
+            ConsoleLog(@" \/\\\\    \//    \__ \ / __/ / /\___\/   v2.0");
+            ConsoleLog(@"\\     \\////    ___/ // /__ / /_/__    /\//\\*=~-");
+            ConsoleLog(@"\--            /_____//_____/\ ____/\  //");
+            ConsoleLog(@" \ ----\       \_____\\_____\/\____\/ //");
+            ConsoleLog(@"  \----\\____________________________//");
+            ConsoleLog(@"        \_\\/__\/_\\/__\/__\\/__\/__\//");
             infobox.Content = "Profiler__App\nv0.2xx[beta]";
             infobox_2.Content = "**-***-***";
             Hyperlink path_to_profiles = new Hyperlink(new Run(config.Read("DirectoryPath") + " /"));         
@@ -82,7 +88,7 @@ namespace WpfApp1
             public string status { get; set; }
             public string photo_max { get; set; }
             public string bdate { get; set; }
-            public Dictionary<string, string> status_audio { get; set; }
+            //public Dictionary<string, string> status_audio { get; set; }
             public string activities { get; set; }
             public string nickname { get; set; }
             public Dictionary<string, string> country { get; set; }
@@ -174,6 +180,10 @@ namespace WpfApp1
             isFocused = true;
         }
 
+        public void ConsoleLog(string text)
+        {
+            console.Content += text + "\n";
+        }
         private void TextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             if (isFocused)
@@ -184,7 +194,7 @@ namespace WpfApp1
         }
         public void Update_profile(object sender, RoutedEventArgs e)
         {
-            Console.Out.WriteLine($"Profile {profile_url.Text} updated");
+            ConsoleLog($"Profile {profile_url.Text} updated");
             Load_profile(new object(), new RoutedEventArgs());
 
             Open_profile(new object(), new RoutedEventArgs());
@@ -280,13 +290,13 @@ namespace WpfApp1
                     photo.Source = new BitmapImage(new Uri(json_profile.photo_max));
                     //Деятельность
                     occupation.Content = $"Occupation: {json_profile.activities}";
-                    if (json_profile.status_audio != null)
+                    if (profile[0].ToString().Contains("status_audio"))
                     {
                         add.Opacity = 100;
                         add.Content = "♫";
                         add.Background = Brushes.LightSkyBlue;
                         hack.IsEnabled = true;
-                        hack.Click += Download;
+                        //hack.Click += Download;
                     }
                     else
                     {
@@ -294,7 +304,7 @@ namespace WpfApp1
                         add.Content = "";
                         add.Background = Brushes.Black;
                         hack.IsEnabled = false;
-                        hack.Click -= Download;
+                        //hack.Click -= Download;
 
                     }
 
@@ -369,13 +379,13 @@ namespace WpfApp1
                     photo.Source = new BitmapImage(new Uri(json_profile.photo_max));
                     //Деятельность
                     occupation.Content = $"Occupation: {json_profile.activities}";
-                    if (json_profile.status_audio != null)
+                    if (profile[0].ToString().Contains("status_audio"))
                     {
                         add.Opacity = 100;
                         add.Content = "♫";
                         add.Background = Brushes.LightSkyBlue;
                         hack.IsEnabled = true;
-                        hack.Click += Download;
+                        //hack.Click += Download;
                     }
                     else
                     {
@@ -383,7 +393,7 @@ namespace WpfApp1
                         add.Content = "";
                         add.Background = Brushes.Black;
                         hack.IsEnabled = false;
-                        hack.Click -= Download;
+                        //hack.Click -= Download;
 
                     }
 
@@ -391,6 +401,7 @@ namespace WpfApp1
                     
                 }
             }
+             
 
             catch (Exception ex)
             {
@@ -402,6 +413,72 @@ namespace WpfApp1
             
             //path_to_file = $"{config.Read("DirectoryPath")}/{profile_url.Text}";
         }
+        public void Open_database(object sender, RoutedEventArgs e)
+        {
+           
+            //chat.Content += "\n" + console.Text; //Добовляем сообщение на панель сообщение с консоли
+            SQLiteConnection conn = new SQLiteConnection($"Data Source={database_url.Text};Version=3;");
+            conn.Open();
+           
+            string sql = "";
+            SQLiteCommand command;
+            SQLiteDataReader reader;
+            switch (database_section.Text)
+            {
+                
+                case "messages":
+                    sql = "SELECT sender, time, text FROM messages";
+                   
+                    command = new SQLiteCommand(sql, conn);
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                        chat.Content += $"\n--------------------------------------------------------------\n<{DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(reader["time"])).DateTime}>[{reader["sender"]}] {reader["text"]}";
+                    break;
+                case "dialogs":
+                    sql = "SELECT sender, time, text FROM dialogs";
+
+                    command = new SQLiteCommand(sql, conn);
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                        chat.Content += $"\n--------------------------------------------------------------\n<{DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt32(reader["time"])).DateTime}>[{reader["sender"]}] {reader["text"]}";
+                    break;
+                case "chats":
+                    sql = "SELECT title, admin FROM chats";
+
+                    command = new SQLiteCommand(sql, conn);
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                        chat.Content += $"\n--------------------------------------------------------------\n<{reader["title"]}>[{reader["admin"]}]";
+                    break;
+                case "users":
+                    sql = "SELECT firstname, lastname, domain, bday, bmonth, byear FROM users";
+                    
+                    command = new SQLiteCommand(sql, conn);
+                    reader = command.ExecuteReader();
+                    while (reader.Read())
+                        if (Int32.Parse(reader["bday"].ToString()) == -1 || 
+                            Int32.Parse(reader["bmonth"].ToString()) == -1 || 
+                            Int32.Parse(reader["byear"].ToString()) == -1 || 
+
+                            Int32.Parse(reader["bday"].ToString()) == 0 || 
+                            Int32.Parse(reader["bmonth"].ToString()) == 0 ||
+                            Int32.Parse(reader["byear"].ToString()) == 0)
+                        {
+                            chat.Content += $"\n--------------------------------------------------------------\n{reader["firstname"]} {reader["lastname"]} [{reader["domain"]}]\nAge > NO RECORD";
+                        }
+                        else
+                        {
+                            chat.Content += $"\n--------------------------------------------------------------\n{reader["firstname"]} {reader["lastname"]} [{reader["domain"]}]\nAge > {CalculateAge(reader["bday"].ToString() + "." + reader["bmonth"].ToString() + "." + reader["byear"].ToString())}";
+                        }
+                       
+                            break;
+
+                default:
+                    MessageBox.Show("Enter the section", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+            }
+            
+        }
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
         {
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
@@ -411,7 +488,7 @@ namespace WpfApp1
         {
             if (e.Key.ToString() == "Q" && hack.IsEnabled==true)
             {
-                Download(new object(), new RoutedEventArgs());
+                //Download(new object(), new RoutedEventArgs());
             }
 
         }
@@ -431,67 +508,67 @@ namespace WpfApp1
                 Prev(new object(), new RoutedEventArgs());
         }
 
-        public void Download(object sender, RoutedEventArgs e)
-        {
-            string[] profile = File.ReadAllLines($"{config.Read("DirectoryPath")}/{profile_url.Text}");
-            if (profile[0].Contains("error"))
-            {
-                MessageBox.Show("Invalid user id","Error");
-            }
-            else
-            {
+        //public void Download(object sender, RoutedEventArgs e)
+        //{
+        //    string[] profile = File.ReadAllLines($"{config.Read("DirectoryPath")}/{profile_url.Text}");
+        //    if (profile[0].Contains("error"))
+        //    {
+        //        MessageBox.Show("Invalid user id","Error");
+        //    }
+        //    else
+        //    {
 
-                //Обрезка ненужного тэга
-                profile[0] = profile[0].Substring(13);
-                profile[0] = profile[0].Substring(0, profile[0].Length - 2);
-                Profile json_profile = JsonConvert.DeserializeObject<Profile>(@profile[0]);
-                Console.Out.WriteLine("Current audio: "+json_profile.status_audio["title"]+" / " + json_profile.status_audio["artist"]);
-                Console.Out.WriteLine("----------------------------------------------------");
-                //Неработает 
-                //Client.DownloadFile($"{json_profile.status_audio["url"]}", $"{json_profile.status_audio["title"]}" + ".mp3");
-                //System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"LG_Cable_Connect.ogg");
-                //player.Play()
+        //        //Обрезка ненужного тэга
+        //        profile[0] = profile[0].Substring(13);
+        //        profile[0] = profile[0].Substring(0, profile[0].Length - 2);
+        //        Profile json_profile = JsonConvert.DeserializeObject<Profile>(@profile[0]);
+        //        ConsoleLog("Current audio: "+json_profile.status_audio["title"]+" / " + json_profile.status_audio["artist"]);
+        //        ConsoleLog("----------------------------------------------------");
+        //        //Неработает 
+        //        //Client.DownloadFile($"{json_profile.status_audio["url"]}", $"{json_profile.status_audio["title"]}" + ".mp3");
+        //        //System.Media.SoundPlayer player = new System.Media.SoundPlayer(@"LG_Cable_Connect.ogg");
+        //        //player.Play()
 
-                string URL = "https://vrit.me/action.php";
-                WebClient webClient = new WebClient();
-                System.Collections.Specialized.NameValueCollection formData = new System.Collections.Specialized.NameValueCollection();
-                Console.Out.WriteLine("POST /action.php HTTP/1.1");
-                Console.Out.WriteLine("Host: vrit.me");
-                Console.Out.WriteLine("Origin: https://vrit.me");
-                Console.Out.WriteLine("method: audio.search");
-                Console.Out.WriteLine("q:  "+ json_profile.status_audio["title"] + " / " + json_profile.status_audio["artist"]);
-                formData["method"] = "audio.search";
-                formData["q"] = json_profile.status_audio["title"] + " / " + json_profile.status_audio["artist"];
-                byte[] responseBytes = webClient.UploadValues(URL, "POST", formData);
-                File.WriteAllText("action.json", Encoding.UTF8.GetString(responseBytes));
-                string file = File.ReadAllText("action.json");
-                Action json_action = JsonConvert.DeserializeObject<Action>(@file);
-                Console.Out.WriteLine("----------------------------------------------------");
-                Match m;
-                string HRefPattern = "href\\s*=\\s*(?:[\"'](?<1>[^\"']*)[\"']|(?<1>\\S+))";
-                try
-                {
-                    m = Regex.Match(json_action.html, HRefPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
-                    while (m.Success)
-                    {                        
-                            Console.Out.WriteLine("Found href " + m.Groups[1] + " at " + m.Groups[1].Index);
-                            try
-                            {
-                                Client.DownloadFile("https://vrit.me" + m.Groups[1], "music.mp3");
-                            Console.Out.WriteLine("Downloading .mp3...");
+        //        string URL = "https://vrit.me/action.php";
+        //        WebClient webClient = new WebClient();
+        //        System.Collections.Specialized.NameValueCollection formData = new System.Collections.Specialized.NameValueCollection();
+        //        ConsoleLog("POST /action.php HTTP/1.1");
+        //        ConsoleLog("Host: vrit.me");
+        //        ConsoleLog("Origin: https://vrit.me");
+        //        ConsoleLog("method: audio.search");
+        //        ConsoleLog("q:  "+ json_profile.status_audio["title"] + " / " + json_profile.status_audio["artist"]);
+        //        formData["method"] = "audio.search";
+        //        formData["q"] = json_profile.status_audio["title"] + " / " + json_profile.status_audio["artist"];
+        //        byte[] responseBytes = webClient.UploadValues(URL, "POST", formData);
+        //        File.WriteAllText("action.json", Encoding.UTF8.GetString(responseBytes));
+        //        string file = File.ReadAllText("action.json");
+        //        Action json_action = JsonConvert.DeserializeObject<Action>(@file);
+        //        ConsoleLog("----------------------------------------------------");
+        //        Match m;
+        //        string HRefPattern = "href\\s*=\\s*(?:[\"'](?<1>[^\"']*)[\"']|(?<1>\\S+))";
+        //        try
+        //        {
+        //            m = Regex.Match(json_action.html, HRefPattern, RegexOptions.IgnoreCase | RegexOptions.Compiled, TimeSpan.FromSeconds(1));
+        //            while (m.Success)
+        //            {                        
+        //                    ConsoleLog("Found href " + m.Groups[1] + " at " + m.Groups[1].Index);
+        //                    try
+        //                    {
+        //                        Client.DownloadFile("https://vrit.me" + m.Groups[1], "music.mp3");
+        //                    ConsoleLog("Downloading .mp3...");
                           
-                            m = m.NextMatch();
-                        }
-                        catch { };
+        //                    m = m.NextMatch();
+        //                }
+        //                catch { };
                                                                         
-                    }
-                }
-                catch (RegexMatchTimeoutException)
-                {
-                    Console.WriteLine("The matching operation timed out.");
-                }
-            }
-        }
+        //            }
+        //        }
+        //        catch (RegexMatchTimeoutException)
+        //        {
+        //            Console.WriteLine("The matching operation timed out.");
+        //        }
+        //    }
+        //}
 
 
         public void wc_UploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
@@ -579,15 +656,15 @@ namespace WpfApp1
                     // Get the PropertyItems property from image.
 
                     
-                    Console.Out.WriteLine("----------------------------------------------------");
+                    ConsoleLog("----------------------------------------------------");
                     Console.BackgroundColor = ConsoleColor.White;
                     Console.ForegroundColor = ConsoleColor.Black;
-                    Console.Out.WriteLine($"{json_profile.first_name} {json_profile.nickname} {json_profile.last_name}");
+                    ConsoleLog($"{json_profile.first_name} {json_profile.nickname} {json_profile.last_name}");
                     Console.ResetColor();
-                        Console.Out.WriteLine($"Age > {CalculateAge(json_profile.bdate)}");                                                                              
-                        Console.Out.WriteLine($"Nationality > {json_profile.country["title"]}");                                     
-                        Console.Out.WriteLine($"Marital Status > {json_profile.relations[json_profile.relation]}");
-                        Console.Out.WriteLine($"Last Known Loc. > {json_profile.timezone}, {json_profile.city["title"]}");
+                        ConsoleLog($"Age > {CalculateAge(json_profile.bdate)}");                                                                              
+                        ConsoleLog($"Nationality > {json_profile.country["title"]}");                                     
+                        ConsoleLog($"Marital Status > {json_profile.relations[json_profile.relation]}");
+                        ConsoleLog($"Last Known Loc. > {json_profile.timezone}, {json_profile.city["title"]}");
                     
                     new WebClient().DownloadFile($"https://api.vk.com/method/wall.get?owner_id={json_profile.id}&extended=1&access_token={access_key_2}&v=5.95", "wall.json");
                     string wall = File.ReadAllText("wall.json");
@@ -597,7 +674,7 @@ namespace WpfApp1
                         string lon2 = wall.Substring(wall.LastIndexOf("long"), "long".Length + 2 + 9);
                         string lat2 = wall.Substring(wall.LastIndexOf("long") - 11, 9);
 
-                        Console.Out.WriteLine(String.Join(", ", new string[] { lon, lat, lon2, lat2 }));
+                        ConsoleLog(String.Join(", ", new string[] { lon, lat, lon2, lat2 }));
 
                         Clipboard.SetText(String.Join(", ", new string[] { lon, lat, lon2, lat2 }));
                     }
@@ -609,7 +686,7 @@ namespace WpfApp1
                         names.Add(json_profile.relatives[i]["name"]);
                         types.Add(json_profile.relatives[i]["type"]);
                     }
-                    Console.Out.WriteLine($"Children > {String.Join(", ", names)}");
+                    ConsoleLog($"Children > {String.Join(", ", names)}");
                 }
             }
             catch 

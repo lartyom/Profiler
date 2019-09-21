@@ -4,6 +4,8 @@
 //using System.Text;
 //using System.Threading.Tasks;
 
+
+
 namespace WpfApp1
 {
     class Program
@@ -11,9 +13,9 @@ namespace WpfApp1
         [STAThread]
         public static void Main(string[] args)
         {
-            var app = new App();
-            app.InitializeComponent();
-            app.Run();
+            //var app = new App();
+            //app.InitializeComponent();
+            //app.Run();
             
         }
     }
